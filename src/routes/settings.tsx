@@ -97,7 +97,7 @@ function SettingsPage() {
                   min={15}
                   max={90}
                   step={5}
-                  onValueChange={([v]) => setDraft({ ...draft, videoLength: v })}
+                  onValueChange={(v) => setDraft({ ...draft, videoLength: v[0] ?? draft.videoLength })}
                 />
               </div>
             </div>
