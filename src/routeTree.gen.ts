@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConnectionsRouteImport } from './routes/connections'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as ProvidersRouteImport } from './routes/providers'
 import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,9 +20,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConnectionsRoute = ConnectionsRouteImport.update({
+  id: '/connections',
+  path: '/connections',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProvidersRoute = ProvidersRouteImport.update({
+  id: '/providers',
+  path: '/providers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -31,31 +43,45 @@ const SettingsRoute = SettingsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/connections': typeof ConnectionsRoute
   '/onboarding': typeof OnboardingRoute
+  '/providers': typeof ProvidersRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/connections': typeof ConnectionsRoute
   '/onboarding': typeof OnboardingRoute
+  '/providers': typeof ProvidersRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/connections': typeof ConnectionsRoute
   '/onboarding': typeof OnboardingRoute
+  '/providers': typeof ProvidersRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/onboarding' | '/settings'
+  fullPaths: '/' | '/connections' | '/onboarding' | '/providers' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/onboarding' | '/settings'
-  id: '__root__' | '/' | '/onboarding' | '/settings'
+  to: '/' | '/connections' | '/onboarding' | '/providers' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/connections'
+    | '/onboarding'
+    | '/providers'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConnectionsRoute: typeof ConnectionsRoute
   OnboardingRoute: typeof OnboardingRoute
+  ProvidersRoute: typeof ProvidersRoute
   SettingsRoute: typeof SettingsRoute
 }
 
@@ -68,11 +94,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/connections': {
+      id: '/connections'
+      path: '/connections'
+      fullPath: '/connections'
+      preLoaderRoute: typeof ConnectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding': {
       id: '/onboarding'
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/providers': {
+      id: '/providers'
+      path: '/providers'
+      fullPath: '/providers'
+      preLoaderRoute: typeof ProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -87,7 +127,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConnectionsRoute: ConnectionsRoute,
   OnboardingRoute: OnboardingRoute,
+  ProvidersRoute: ProvidersRoute,
   SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
