@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConnectionsRouteImport } from './routes/connections'
+import { Route as CreateRouteImport } from './routes/create'
+import { Route as LibraryRouteImport } from './routes/library'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as ProvidersRouteImport } from './routes/providers'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -23,6 +25,16 @@ const IndexRoute = IndexRouteImport.update({
 const ConnectionsRoute = ConnectionsRouteImport.update({
   id: '/connections',
   path: '/connections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -44,6 +56,8 @@ const SettingsRoute = SettingsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/connections': typeof ConnectionsRoute
+  '/create': typeof CreateRoute
+  '/library': typeof LibraryRoute
   '/onboarding': typeof OnboardingRoute
   '/providers': typeof ProvidersRoute
   '/settings': typeof SettingsRoute
@@ -51,6 +65,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/connections': typeof ConnectionsRoute
+  '/create': typeof CreateRoute
+  '/library': typeof LibraryRoute
   '/onboarding': typeof OnboardingRoute
   '/providers': typeof ProvidersRoute
   '/settings': typeof SettingsRoute
@@ -59,19 +75,37 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/connections': typeof ConnectionsRoute
+  '/create': typeof CreateRoute
+  '/library': typeof LibraryRoute
   '/onboarding': typeof OnboardingRoute
   '/providers': typeof ProvidersRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/connections' | '/onboarding' | '/providers' | '/settings'
+  fullPaths:
+    | '/'
+    | '/connections'
+    | '/create'
+    | '/library'
+    | '/onboarding'
+    | '/providers'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/connections' | '/onboarding' | '/providers' | '/settings'
+  to:
+    | '/'
+    | '/connections'
+    | '/create'
+    | '/library'
+    | '/onboarding'
+    | '/providers'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/connections'
+    | '/create'
+    | '/library'
     | '/onboarding'
     | '/providers'
     | '/settings'
@@ -80,6 +114,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConnectionsRoute: typeof ConnectionsRoute
+  CreateRoute: typeof CreateRoute
+  LibraryRoute: typeof LibraryRoute
   OnboardingRoute: typeof OnboardingRoute
   ProvidersRoute: typeof ProvidersRoute
   SettingsRoute: typeof SettingsRoute
@@ -99,6 +135,20 @@ declare module '@tanstack/react-router' {
       path: '/connections'
       fullPath: '/connections'
       preLoaderRoute: typeof ConnectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -128,6 +178,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConnectionsRoute: ConnectionsRoute,
+  CreateRoute: CreateRoute,
+  LibraryRoute: LibraryRoute,
   OnboardingRoute: OnboardingRoute,
   ProvidersRoute: ProvidersRoute,
   SettingsRoute: SettingsRoute,
