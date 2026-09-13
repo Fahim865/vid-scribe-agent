@@ -54,7 +54,7 @@ function ProvidersPage() {
         status: "active",
         lastUsed: "never",
         isDefault: !keys.some((k) => k.category === category && k.isDefault),
-        endpoint: isCustom ? endpoint : undefined,
+        ...(isCustom && endpoint ? { endpoint } : {}),
         usage: 0,
         quota: 500,
       },

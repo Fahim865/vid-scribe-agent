@@ -114,12 +114,14 @@ function SettingsPage() {
                 min={1}
                 max={6}
                 step={1}
-                onValueChange={([v]) =>
+                onValueChange={(vals) =>
                   setDraft((d) => {
+                    const v = vals[0] ?? d.frequency;
                     const slots = Array.from({ length: v }, (_, i) => d.timeSlots[i] ?? "12:00");
                     return { ...d, frequency: v, timeSlots: slots };
                   })
                 }
+
               />
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
