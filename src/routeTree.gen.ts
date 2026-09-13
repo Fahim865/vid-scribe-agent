@@ -10,16 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as ConnectionsRouteImport } from './routes/connections'
 import { Route as CreateRouteImport } from './routes/create'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as ProvidersRouteImport } from './routes/providers'
+import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConnectionsRoute = ConnectionsRouteImport.update({
@@ -47,6 +60,11 @@ const ProvidersRoute = ProvidersRouteImport.update({
   path: '/providers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -55,69 +73,90 @@ const SettingsRoute = SettingsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/calendar': typeof CalendarRoute
   '/connections': typeof ConnectionsRoute
   '/create': typeof CreateRoute
   '/library': typeof LibraryRoute
   '/onboarding': typeof OnboardingRoute
   '/providers': typeof ProvidersRoute
+  '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/calendar': typeof CalendarRoute
   '/connections': typeof ConnectionsRoute
   '/create': typeof CreateRoute
   '/library': typeof LibraryRoute
   '/onboarding': typeof OnboardingRoute
   '/providers': typeof ProvidersRoute
+  '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/calendar': typeof CalendarRoute
   '/connections': typeof ConnectionsRoute
   '/create': typeof CreateRoute
   '/library': typeof LibraryRoute
   '/onboarding': typeof OnboardingRoute
   '/providers': typeof ProvidersRoute
+  '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/account'
+    | '/calendar'
     | '/connections'
     | '/create'
     | '/library'
     | '/onboarding'
     | '/providers'
+    | '/schedule'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/account'
+    | '/calendar'
     | '/connections'
     | '/create'
     | '/library'
     | '/onboarding'
     | '/providers'
+    | '/schedule'
     | '/settings'
   id:
     | '__root__'
     | '/'
+    | '/account'
+    | '/calendar'
     | '/connections'
     | '/create'
     | '/library'
     | '/onboarding'
     | '/providers'
+    | '/schedule'
     | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountRoute: typeof AccountRoute
+  CalendarRoute: typeof CalendarRoute
   ConnectionsRoute: typeof ConnectionsRoute
   CreateRoute: typeof CreateRoute
   LibraryRoute: typeof LibraryRoute
   OnboardingRoute: typeof OnboardingRoute
   ProvidersRoute: typeof ProvidersRoute
+  ScheduleRoute: typeof ScheduleRoute
   SettingsRoute: typeof SettingsRoute
 }
 
@@ -128,6 +167,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/connections': {
@@ -165,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -177,11 +237,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountRoute: AccountRoute,
+  CalendarRoute: CalendarRoute,
   ConnectionsRoute: ConnectionsRoute,
   CreateRoute: CreateRoute,
   LibraryRoute: LibraryRoute,
   OnboardingRoute: OnboardingRoute,
   ProvidersRoute: ProvidersRoute,
+  ScheduleRoute: ScheduleRoute,
   SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
