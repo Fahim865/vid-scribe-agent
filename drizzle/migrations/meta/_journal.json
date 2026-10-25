@@ -8,6 +8,13 @@
       "when": 1792868836439,
       "tag": "0000_reelpilot_core_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792957214211,
+      "tag": "0001_reelpilot_voice_assets",
+      "breakpoints": true
     }
   ]
 }
