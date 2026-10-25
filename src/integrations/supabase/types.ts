@@ -397,6 +397,7 @@ export type Database = {
           user_id: string
           video_url: string | null
           views: number
+          voice_url: string | null
         }
         Insert: {
           created_at?: string
@@ -413,6 +414,7 @@ export type Database = {
           user_id: string
           video_url?: string | null
           views?: number
+          voice_url?: string | null
         }
         Update: {
           created_at?: string
@@ -429,6 +431,7 @@ export type Database = {
           user_id?: string
           video_url?: string | null
           views?: number
+          voice_url?: string | null
         }
         Relationships: [
           {

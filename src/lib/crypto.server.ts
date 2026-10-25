@@ -1,11 +1,5 @@
 // Server-only helpers: AES-GCM encryption for user API keys.
-// Uses WebCrypto so it runs on the edge/worker runtime and Node alike.
-import { createMiddleware } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/integrations/supabase/types";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-
+// Uses WebCrypto so it runs on the worker runtime and Node alike.
 const SECRET_NAME = "REELPILOT_ENCRYPTION_KEY";
 
 let cryptoKeyPromise: Promise<CryptoKey> | undefined;
@@ -73,30 +67,3 @@ export function maskKey(secret: string): string {
   if (s.length <= 7) return `${s.slice(0, 2)}••••`;
   return `${s.slice(0, 3)}••••••••${s.slice(-4)}`;
 }
-
-/**
- * Authenticated middleware identical to requireSupabaseAuth but also exposing a
- * service-role client for privileged operations (after the caller is verified).
- */
-export const requireSupabaseAuthAdmin = createMiddleware({ type: "function" }).server(
-  async (ctx) => {
-    const request = getRequest();
-    const authHeader = request?.headers.get("authorization") ?? "";
-    if (!authHeader.startsWith("Bearer ")) throw new Error("Unauthorized: No token provided");
-
-    const SUPABASE_URL = process.env["SUPABASE_URL"];
-    const SERVICE_KEY = process.env["SUPABASE_SERVICE_ROLE_KEY"];
-    if (!SUPABASE_URL || !SERVICE_KEY) {
-      throw new Error("Missing Supabase environment variables for admin client");
-    }
-
-    // Verify the caller first with the user-scoped middleware.
-    const result = await requireSupabaseAuth({ ...ctx, next: async (inner: unknown) => inner });
-    void result;
-
-    const admin = createClient<Database>(SUPABASE_URL, SERVICE_KEY, {
-      auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
-    });
-    return ctx.next({ context: { supabaseAdmin: admin } });
-  },
-);
